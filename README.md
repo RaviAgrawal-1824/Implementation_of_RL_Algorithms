@@ -1,6 +1,21 @@
 # Implementation_of_RL_Algorithms
  Implementation of different Reinforcement Learning Algorithms on various Gym Environmnets.
 
+## Table of Contents
+- [Model Based Methods](#model-based-methods)
+  - [Policy Iteration](#policy-iteration)
+  - [Value Iteration](#value-iteration)
+- [Model Free Methods](#model-free-methods)
+  - [Tabular Methods](#tabular-methods)
+     - [SARSA](#sarsa) 
+     - [SARSA-Lambda](#sarsa-lambda) 
+     - [SARSA-Backwards](#sarsa-backwards)
+     - [Monte-Carlo](#monte-carlo) 
+     - [Q-learning](#q-learning)
+  - [Approximation Methods](#approximation-methods)
+     - [Action Value Function Approximation](#action-value-function-approximation)
+     - [Policy Gradient](#policy-gradient)
+
 ## Model Based Methods
 Model Based algorithms require the complete dynamics of the environment for their implemetation. Value function for each state is computed using the model of the environment and optimal policy is determined accordingly.
 Tested on different FrozenLake environments. (link)
@@ -74,6 +89,7 @@ gifs and comparative graphs
 
 #### effect on learning with variations in hyperparameters
 
-### Value Function Approximation Methods
+### Approximation Methods
 
-
+#### Action Value Function Approximation
+#### Policy Gradient
