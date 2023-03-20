@@ -80,13 +80,11 @@ This algorithm is implemented on four environments:
    * `MiniGrid-Empty-Random-6x6-v0`
    * `MiniGrid-Dynamic-Obstacles-6x6-v0`
           
-<img src="https://user-images.githubusercontent.com/109269344/226196330-57027daa-29b5-4c4f-8fb0-3580fe43db19.png" width="370" height="350" /><img src="https://user-images.githubusercontent.com/109269344/226195527-411e47d4-b6e3-4dad-a3d0-d2d38e81207d.png" width="370" height="350"/>  
-
-<img src="https://user-images.githubusercontent.com/109269344/226196318-84549a3b-566c-42a8-887a-938c282e6d65.png" width="370" height="350" /><img src="https://user-images.githubusercontent.com/109269344/226195536-9e61799d-05ed-468c-8e88-cfba57ceb416.png" width="370" height="350"/> 
-
-<img src="https://user-images.githubusercontent.com/109269344/226196301-044e7f3c-881c-4456-b1da-01543e4a8c83.png" width="370" height="350" /><img src="https://user-images.githubusercontent.com/109269344/226195550-697a578e-c8b0-454e-bcc6-c84bf9978568.png" width="370" height="350"/> 
-
-<img src="https://user-images.githubusercontent.com/109269344/226196292-10baa217-f675-45c8-9781-6b37f52349d2.png" width="370" height="350" /><img src="https://user-images.githubusercontent.com/109269344/226195554-4380d934-a4f9-41cd-b842-3a292ae538c6.png" width="370" height="350"/>
+|<img src="https://user-images.githubusercontent.com/109269344/226196330-57027daa-29b5-4c4f-8fb0-3580fe43db19.png" width="370" height="350"/> | <img src="https://user-images.githubusercontent.com/109269344/226195527-411e47d4-b6e3-4dad-a3d0-d2d38e81207d.png" width="370" height="350"/>|
+|:--:|:--:|
+|<img src="https://user-images.githubusercontent.com/109269344/226196318-84549a3b-566c-42a8-887a-938c282e6d65.png" width="370" height="350"/> | <img src="https://user-images.githubusercontent.com/109269344/226195536-9e61799d-05ed-468c-8e88-cfba57ceb416.png" width="370" height="350"/>|
+|<img src="https://user-images.githubusercontent.com/109269344/226196301-044e7f3c-881c-4456-b1da-01543e4a8c83.png" width="370" height="350"/> | <img src="https://user-images.githubusercontent.com/109269344/226195550-697a578e-c8b0-454e-bcc6-c84bf9978568.png" width="370" height="350"/>|
+|<img src="https://user-images.githubusercontent.com/109269344/226196292-10baa217-f675-45c8-9781-6b37f52349d2.png" width="370" height="350"/> | <img src="https://user-images.githubusercontent.com/109269344/226195554-4380d934-a4f9-41cd-b842-3a292ae538c6.png" width="370" height="350"/>|
 
 #### Monte-Carlo 
 This algorithm uses Monte-Carlo approach for action value estimation where the actual return is calculated by summing up the discounted rewards till the terminal step. This method has zero bias but has high variance.
@@ -105,12 +103,10 @@ The algorithm is implemented on four environments:
    * `MiniGrid-Dynamic-Obstacles-6x6-v0`
 
 |<img src="https://user-images.githubusercontent.com/109269344/226198220-0475d499-6def-4ac8-8516-a2cb0711d09d.png" width="370" height="350" /> | <img src="https://user-images.githubusercontent.com/109269344/226198243-9e67044d-bede-4e96-a879-a28f580e469e.png" width="370" height="350"/>|
-
+|:--:|:--:|
 |<img src="https://user-images.githubusercontent.com/109269344/226198200-b08009a1-2194-43ce-a03d-2a5b4d16102a.png" width="370" height="350" /> | <img src="https://user-images.githubusercontent.com/109269344/226198202-d026b494-f37b-4442-b999-d20fcc14fbd8.png" width="370" height="350"/>|
-
 |<img src="https://user-images.githubusercontent.com/109269344/226198209-e2759d2c-fe0e-4c3d-b524-36ec0ca05970.png" width="370" height="350" /> | <img src="https://user-images.githubusercontent.com/109269344/226198217-cff66e6c-ac87-41c1-95ae-1c443dcf99ce.png" width="370" height="350"/>|
-
-|<img src="https://user-images.githubusercontent.com/109269344/226198029-6724bb6d-0cc0-4ce3-8e19-1b5ba7049238.png" width="370" height="350" /> | <img src="https://user-images.githubusercontent.com/109269344/226198033-3da95c42-4fb5-49eb-ba8c-2db5bf77fd3b.png" width="480" height="350"/>|
+|<img src="https://user-images.githubusercontent.com/109269344/226198029-6724bb6d-0cc0-4ce3-8e19-1b5ba7049238.png" width="370" height="350" /> | <img src="https://user-images.githubusercontent.com/109269344/226198033-3da95c42-4fb5-49eb-ba8c-2db5bf77fd3b.png" width="370" height="350"/>|
 
 gifs and comparative graphs, hyper-parameters tuning
 
