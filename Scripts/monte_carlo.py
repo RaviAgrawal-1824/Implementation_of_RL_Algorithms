@@ -36,10 +36,10 @@ def epsilon_greedy_policy(Epsilon,pos,Q_table,n_epoch):
 
 def cal_update(Episode_history,Qtable):
     for i in range(0, len(Episode_history)-1):
-        lam_return=cal_lambda_return(Episode_history[i:])
-        update(Episode_history[i][0],Episode_history[i][1],lam_return,Qtable)
+        dis_return=cal_discounted_return(Episode_history[i:])
+        update(Episode_history[i][0],Episode_history[i][1],dis_return,Qtable)
 
-def cal_lambda_return(Episode_history):
+def cal_discounted_return(Episode_history):
     sum_return=0
     gamma_p=1
     for step in Episode_history:

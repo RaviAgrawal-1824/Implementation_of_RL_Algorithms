@@ -40,12 +40,26 @@ def epsilon_greedy_policy(Epsilon,pos,Q_table,n_epoch):
         #     print(n_epoch,'iteration and action chosen greedily')
     return Act
 
+def update(pos,action,mc_return,Q_table):
+    error = mc_return - Q_table[pos][action]
+    Q_table[pos][action] = Q_table[pos][action] + alpha * error
+
+def epsilon_greedy_policy(Epsilon,pos,Q_table,n_epoch):
+    prob_decider=random.uniform(0,1)
+    if(Epsilon>=prob_decider):
+        Act=random.randint(0,2)
+    else:
+        Act=np.argmax(list(Q_table[pos].values())) # conversion of dict.values() in list is important for correct greddy action selection.
+        if(n_epoch<30):
+            print(n_epoch,'iteration and action chosen greedily')
+    return Act
+
 def cal_update(Episode_history,Qtable):
     for i in range(0, len(Episode_history)-1):
-        lam_return=cal_lambda_return(Episode_history[i:])
-        update(Episode_history[i][0],Episode_history[i][1],lam_return,Qtable)
+        dis_return=cal_discounted_return(Episode_history[i:])
+        update(Episode_history[i][0],Episode_history[i][1],dis_return,Qtable)
 
-def cal_lambda_return(Episode_history):
+def cal_discounted_return(Episode_history):
     sum_return=0
     gamma_p=1
     for step in Episode_history:
@@ -71,9 +85,6 @@ for i in range(min_epoch,int(max_epoch*1.4)):
 
     if(i>0 and i<max_epoch+1):
         epsilon=1-i/max_epoch 
-
-    # if(i>(min_epoch/3) and i<max_epoch*1.1 and i%20==0):
-    #     print(Q_lookup)
 
     while(n<500 and not done):
         env.render()

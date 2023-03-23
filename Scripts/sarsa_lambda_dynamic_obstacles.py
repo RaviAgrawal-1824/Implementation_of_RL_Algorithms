@@ -66,9 +66,6 @@ for i in range(min_epoch,int(max_epoch*1.4)):
     if(i>0 and i<max_epoch+1):
         epsilon=1-i/max_epoch
 
-    # if(i>(min_epoch/3) and i<max_epoch*1.1 and i%20==0):
-    #     print(Q_lookup)
-
     while(n<500 and not done):
         env.render()
 

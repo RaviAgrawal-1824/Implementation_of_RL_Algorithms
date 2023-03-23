@@ -18,10 +18,10 @@ Lambda=0.9
 epsilon=1
 max_epoch,min_epoch=2000,-2000
 
-def update(prev_pos,new_pos,action,imm_reward,Q_table):
-    Qval_max = max(list(Q_table[new_pos].values()))
-    change = (imm_reward+gamma*Qval_max) - Q_table[prev_pos][action]
-    Q_table[prev_pos][action]=Q_table[prev_pos][action]+alpha*change
+def update(prev_pos,new_pos,prev_action,new_action,imm_reward,Q_table):
+    Q_next = Q_table[new_pos][new_action]
+    td_error = (imm_reward + gamma*Q_next) - Q_table[prev_pos][prev_action]
+    Q_table[prev_pos][prev_action] = Q_table[prev_pos][prev_action] + alpha * td_error
 
 def epsilon_greedy_policy(Epsilon,pos,Q_table,n_epoch):
     prob_decider=random.uniform(0,1)
@@ -51,9 +51,6 @@ for i in range(min_epoch,int(max_epoch*1.4)):
     if(i>0 and i<max_epoch+1):
         epsilon=1-i/max_epoch
 
-    # if(i>(min_epoch/3) and i<max_epoch*1.1 and i%20==0):
-    #     print(Q_lookup)
-
     while(n<500 and not done):
         env.render()
 
@@ -69,8 +66,7 @@ for i in range(min_epoch,int(max_epoch*1.4)):
             act=epsilon_greedy_policy(epsilon,prev_pos,Q_lookup,n)
 
         obs,reward,done,d,e=env.step(act)  # taking a step in the environment
-        # if(reward<0):
-        #     reward=0
+
         if(reward):
             print(n,'itreartion has reward',reward)
 
@@ -81,7 +77,7 @@ for i in range(min_epoch,int(max_epoch*1.4)):
             print(new_pos, 'state seen', k)
 
         new_act=epsilon_greedy_policy(epsilon,new_pos,Q_lookup,n)
-        update(prev_pos,new_pos,act,reward,Q_lookup)
+        update(prev_pos,new_pos,act,new_act,reward,Q_lookup)
 
         if(not n%100 or done):
             print("iteration",n,'and done is',done)

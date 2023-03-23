@@ -39,9 +39,7 @@ for i in range(min_epoch,int(max_epoch*1.4)):
         env = gym.make('MiniGrid-Dynamic-Obstacles-6x6-v0',render_mode='human')
     if(i==2050):
         env = gym.make('MiniGrid-Dynamic-Obstacles-6x6-v0')
-    # if(i>(min_epoch/3) and i<max_epoch*1.1 and i%20==0):
-    #     print(Q_lookup)
-
+ 
     while(n<500 and not done):
         env.render()
 
