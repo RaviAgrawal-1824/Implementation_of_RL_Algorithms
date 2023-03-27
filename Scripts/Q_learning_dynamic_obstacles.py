@@ -28,9 +28,6 @@ for i in range(min_epoch,int(max_epoch*1.4)):
 
     epoch_list.append(i+min_epoch)
     done,n,reward=0,1,0
-    if(i>0 or (i<0 and i%50==0)):
-        obs=env.reset()[0]
-
     print('--'*50,'\n',i,'epoch')
 
     if(i>0 and i<max_epoch+1):
@@ -39,6 +36,8 @@ for i in range(min_epoch,int(max_epoch*1.4)):
         env = gym.make('MiniGrid-Dynamic-Obstacles-6x6-v0',render_mode='human')
     if(i==2050):
         env = gym.make('MiniGrid-Dynamic-Obstacles-6x6-v0')
+    if(i>0 or (i<0 and i%50==0)):
+        obs=env.reset()[0]
  
     while(n<500 and not done):
         env.render()
