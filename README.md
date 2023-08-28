@@ -1,35 +1,35 @@
 # Implementation_of_RL_Algorithms
- Implementation of different Reinforcement Learning Algorithms on various Gym Environmnets.
+ Implementation of different Reinforcement Learning Algorithms in various Gym environments.
 
 ## Table of Contents
-- [Model Based Methods](#model-based-methods)
+- [Model-based Methods](#model-based-methods)
   - [Policy Iteration](#policy-iteration)
   - [Value Iteration](#value-iteration)
-- [Model Free Methods](#model-free-methods)
+- [Model-free Methods](#model-free-methods)
   - [Tabular Methods](#tabular-methods)
      - [SARSA](#sarsa) 
      - [SARSA-Lambda](#sarsa-lambda) 
      - [SARSA-Backwards](#sarsa-backwards)
      - [Monte-Carlo](#monte-carlo) 
      - [Q-learning](#q-learning)
-  - [Approximation Methods](#approximation-methods)
-     - [Action Value Function Approximation](#action-value-function-approximation)
-      - [Policy Gradient](#policy-gradient)
+  - [Learning-based Methods](#learning-based-methods)
+     - [Deep Q-Networks(DQN)](#deep-q-networks(dqn))
+      - [Actor-Critic](#actor-critic)
 
-## Model Based Methods
-Model Based algorithms require the complete dynamics of the environment for their implemetation. Value function for each state is computed using the model of the environment and optimal policy is determined accordingly.
+## Model-Based Methods
+Model-based algorithms require the complete dynamics of the environment for their implementation. The value function for each state is computed using the model of the environment and optimal policy is determined accordingly.
 Tested on different [FrozenLake environments](https://www.gymlibrary.dev/environments/toy_text/frozen_lake/).
 
 ### Policy Iteration
-This algorithm involves an iterative process that alternates between evaluating and improving the current policy until an optimal policy is found. The policy evaluation step is iterative until convergence then policy improvement step is taken.
-The algorithm is implemented on three environments:
+This algorithm involves an iterative process that alternates between evaluating and improving the current policy until an optimal policy is found. The policy evaluation step is iterative until convergence then the policy improvement step is taken.
+The algorithm is implemented in three environments:
    * `FrozenLake-v1`, `is_slippery = False`
    * `FrozenLake8x8-v1`, `is_slippery = False`
    * `FrozenLake-v1`, `is_slippery = True`
 
 ### Value Iteration
-This algorithm also involves an iterative process that alternates between evaluating and improving the current policy but the policy evaluation step doesnot wait for its convergence and policy improvement step is taken. Evaluation and Improvement step is taken alternatively till optimal policy is found.
-The algorithm is implemented on three environments:
+This algorithm also involves an iterative process that alternates between evaluating and improving the current policy but the policy evaluation step does not wait for its convergence and the policy improvement step is taken. Evaluation and Improvement step is taken alternatively till optimal policy is found.
+The algorithm is implemented in three environments:
    * `FrozenLake-v1`, `is_slippery = False`
    * `FrozenLake8x8-v1`, `is_slippery = False`
    * `FrozenLake-v1`, `is_slippery = True`
@@ -41,11 +41,11 @@ The algorithm is implemented on three environments:
 | Policy Iteration took 35 Steps. | Policy Iteration took 135 Steps. | Policy Iteration took 35 Steps. |
 | Value Iteration took 15 Steps. | Value Iteration took 31 Steps.  | Value Iteration took 15 Steps.  |
  
- ## Model Free Methods
-  Model free algorithms do not require a model of the underlying environment. The agent learns the optimal policy or value function by interacting with the environment and observing rewards.
+ ## Model-free Methods
+  Model-free algorithms do not require a model of the underlying environment. The agent learns the optimal policy or value function by interacting with the environment and observing rewards.
 
   ### Tabular Methods
-Tabular methods maintain a table of values for each state-action pair in the environment. The agent explores the environment and append new observations in the table and iteratively estimates its true value fuctions. They are effective in small to medium-sized environments.
+Tabular methods maintain a table of values for each state-action pair in the environment. The agent explores the environment and appends new observations in the table and iteratively estimates its true value functions. They are effective in small to medium-sized environments.
 Tested on different [Minigrid environments](https://github.com/mit-acl/gym-minigrid):
    * `MiniGrid-Empty-6x6-v0`
    * `MiniGrid-Empty-8x8-v0`
@@ -57,24 +57,24 @@ Tested on different [Minigrid environments](https://github.com/mit-acl/gym-minig
 |`MiniGrid-Empty-6x6-v0`|`MiniGrid-Empty-8x8-v0`|`MiniGrid-Empty-Random-6x6-v0`|`MiniGrid-Dynamic-Obstacles-6x6-v0`|
 
 #### SARSA
-SARSA (State-Action-Reward-State-Action) learns to find the optimal policy by estimating the action-value function. The action value is estimated through Temporal Difference(TD-0) method bootstrapped from the next (state,action) pair. It has low variance but introduces comparatively higher bias.
-This algorithm is implemented on four environments:
+SARSA (State-Action-Reward-State-Action) learns to find the optimal policy by estimating the action-value function. The action value is estimated through the Temporal Difference(TD-0) method bootstrapped from the next (state, action) pair. It has low variance but introduces comparatively higher bias.
+This algorithm is implemented in four environments:
    * `MiniGrid-Empty-6x6-v0`
    * `MiniGrid-Empty-8x8-v0`
    * `MiniGrid-Empty-Random-6x6-v0`
    * `MiniGrid-Dynamic-Obstacles-6x6-v0`
 
 #### SARSA-Lambda
-In this algorithm, the action value is estimated as a geometrical weighted avergae over all time step returns. The estimate donot considers only the next state but all the intermediate steps till the terminal step. It is a more robust algorithm having low variance and low bias.
-This algorithm is implemented on four environments:
+In this algorithm, the action value is estimated as a geometrically weighted average over all time step returns. The estimate does not consider only the next state but all the intermediate steps till the terminal step. It is a more robust algorithm having low variance and low bias.
+This algorithm is implemented in four environments:
    * `MiniGrid-Empty-6x6-v0`
    * `MiniGrid-Empty-8x8-v0`
    * `MiniGrid-Empty-Random-6x6-v0`
    * `MiniGrid-Dynamic-Obstacles-6x6-v0`
 
 #### SARSA-Backwards
-This algorithm uses Eligibility Traces which is based on frequency and recency heuristics. Eligibility traces are a way of assigning credit to (state,action) pairs that led to a particular reward. It helps in updating the values functions in proportion to the credit assigned to them. The updates to the states are equivalent to that in SARSA-Lambda at the end of the episode for offline training.
-This algorithm is implemented on four environments:
+This algorithm uses Eligibility Traces which is based on frequency and recency heuristics. Eligibility traces are a way of assigning credit to (state, action) pairs that led to a particular reward. It helps in updating the value functions in proportion to the credit assigned to them. The updates to the states are equivalent to those in SARSA-Lambda at the end of the episode for offline training.
+This algorithm is implemented in four environments:
    * `MiniGrid-Empty-6x6-v0`
    * `MiniGrid-Empty-8x8-v0`
    * `MiniGrid-Empty-Random-6x6-v0`
@@ -87,8 +87,8 @@ This algorithm is implemented on four environments:
 |<img src="https://user-images.githubusercontent.com/109269344/226196292-10baa217-f675-45c8-9781-6b37f52349d2.png" width="370" height="350"/> | <img src="https://user-images.githubusercontent.com/109269344/226195554-4380d934-a4f9-41cd-b842-3a292ae538c6.png" width="370" height="350"/>|
 
 #### Monte-Carlo 
-This algorithm uses Monte-Carlo approach for action value estimation where the actual return is calculated by summing up the discounted rewards till the terminal step. This method has zero bias but has high variance.
-The algorithm is implemented on four environments:
+This algorithm uses the Monte-Carlo approach for action value estimation where the actual return is calculated by summing up the discounted rewards till the terminal step. This method has zero bias but has high variance.
+The algorithm is implemented in four environments:
    * `MiniGrid-Empty-6x6-v0`
    * `MiniGrid-Empty-8x8-v0`
    * `MiniGrid-Empty-Random-6x6-v0`
@@ -96,7 +96,7 @@ The algorithm is implemented on four environments:
 
 #### Q-learning
 This algorithm is an OFF-policy algorithm. Its behaviour policy is Epsilon-greedy whereas the target policy is fully greedy. The action values are bootstrapped from the best action value of the next state.
-The algorithm is implemented on four environments:
+The algorithm is implemented in four environments:
    * `MiniGrid-Empty-6x6-v0`
    * `MiniGrid-Empty-8x8-v0`
    * `MiniGrid-Empty-Random-6x6-v0`
@@ -108,11 +108,26 @@ The algorithm is implemented on four environments:
 |<img src="https://user-images.githubusercontent.com/109269344/226198209-e2759d2c-fe0e-4c3d-b524-36ec0ca05970.png" width="370" height="350" /> | <img src="https://user-images.githubusercontent.com/109269344/226198217-cff66e6c-ac87-41c1-95ae-1c443dcf99ce.png" width="370" height="350"/>|
 |<img src="https://user-images.githubusercontent.com/109269344/226198029-6724bb6d-0cc0-4ce3-8e19-1b5ba7049238.png" width="370" height="350" /> | <img src="https://user-images.githubusercontent.com/109269344/226198033-3da95c42-4fb5-49eb-ba8c-2db5bf77fd3b.png" width="370" height="350"/>|
 
-gifs and comparative graphs, hyper-parameters tuning
+<!-- gifs and comparative graphs, hyper-parameters tuning
 
-#### effect on learning with variations in hyperparameters
+#### effect on learning with variations in hyperparameters -->
 
-### Approximation Methods
+### Learning-based Methods
+Learning-based methods involve directly learning the optimal policy or value function without constructing an explicit model of the environment. These methods utilize machine learning techniques, often neural networks, to approximate complex value functions or policies. These methods are especially suitable for environments with high-dimensional state spaces or continuous action spaces where tabular methods might be impractical. Tested on different [Gym environments](https://www.gymlibrary.dev/environments/classic_control/): 
+   * `CartPole-v1`
+   * `Pendulum-v1`
 
-#### Action Value Function Approximation
-#### Policy Gradient
+|<img src = "https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/assets/109269344/f6d2123f-c767-4c4a-a4dd-613efb1c51a6" width="400" height="350"/> | <img src = "https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/assets/109269344/162ecffa-38cf-467f-9252-4182880e1c73" width="400" height="350"/>|
+|:--:|:--:|
+|`CartPole-v1`|`Pendulum-v1`|
+
+#### Deep Q-Networks(DQN)
+DQN extends Q-learning by using neural networks to approximate the action-value function. It uses an experience-replay buffer to store the history and train the model to estimate the action-value function. Fixed Q-target is used to enhance the stability in it. 
+Tested in `CartPole-v1`.
+
+|<img width="370" height="350" src="https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/assets/109269344/ade482d6-8cd0-4aa4-9848-2790a1e69920" />|<img width="370" height="350" src="https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/assets/109269344/77a66ac1-860b-4b89-824c-19aadb79ae0e"/>|
+|:--:|:--:|
+<img width="370" height="350" src="https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/assets/109269344/22acd915-9a3c-4bc9-b4a1-62dcb3aac91a"/>
+
+#### Actor-Critic
+Actor-critic methods deploy neural networks for estimation of both policy(by Actor) and value function(by Critic). It is useful for environments with continuous action spaces. Tested in `Pendulum-v1`.
