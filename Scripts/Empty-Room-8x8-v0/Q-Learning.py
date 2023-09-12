@@ -4,8 +4,6 @@ import random
 import matplotlib.pyplot as plt
 
 env = gym.make('MiniGrid-Empty-8x8-v0')
-# env = gym.make('MiniGrid-Empty-Random-6x6-v0',render_mode='human')
-# env = gym.make('MiniGrid-Empty-6x6-v0',render_mode='human')
 # env = gym.make('MiniGrid-Empty-8x8-v0',render_mode='human')
 env.reset()
 iteration_list,epoch_list,reward_list=[],[],[]
@@ -34,9 +32,6 @@ for i in range(min_epoch,int(max_epoch*1.4)):
     if(i>0 and i<max_epoch+1):
         epsilon=1-i/max_epoch
 
-    if(i>(min_epoch/3) and i<max_epoch*1.1 and i%7==0):
-        print(Q_lookup)
-
     while(n<700 and not done):
         env.render()
 
@@ -49,8 +44,6 @@ for i in range(min_epoch,int(max_epoch*1.4)):
             act=random.randint(0,2)
         else:
             act=np.argmax(list(Q_lookup[prev_pos].values())) # conversion of dict.values() in list is important for correct greddy action selection.
-            if(n<30):
-                print(n,'iteration and action chosen greedily')
 
         a,reward,done,d,e=env.step(act)  # taking a step in the environment
         if(reward<0):
@@ -71,10 +64,9 @@ for i in range(min_epoch,int(max_epoch*1.4)):
     reward_list.append(reward)
 
 print(Q_lookup,'\n\n',epoch_list,'\n\n',reward_list,'\n\n',iteration_list)
-x = np.arange(len(reward_list))
-plt.plot(x,reward_list)
+plt.plot(reward_list)
 plt.xlabel('No. of Epochs')
-plt.ylabel('No. of steps required to reach the goal')
-plt.title('Q-learning applied on MiniGrid-Empty-6x6-v0')
+plt.ylabel('Reward Function')
+plt.title('Q-learning applied on MiniGrid-Empty-8x8-v0')
 plt.show()
 

@@ -217,7 +217,6 @@ def render_single(env, policy, max_steps=100):
 
 
 if __name__ == "__main__":
-    #name = "FrozenLake8x8-v1"
     name = "FrozenLake-v1"
     is_slippery = False
     if(name == "FrozenLake8x8-v1"):

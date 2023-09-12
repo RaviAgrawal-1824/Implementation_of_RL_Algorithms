@@ -22,14 +22,12 @@ def update(pos,action,lambda_return,Q_table):
     td_error = lambda_return - Q_table[pos][action]
     Q_table[pos][action] = Q_table[pos][action] + alpha * td_error
 
-def epsilon_greedy_policy(Epsilon,pos,Q_table,n_epoch):
+def epsilon_greedy_policy(Epsilon,pos,Q_table):
     prob_decider=random.uniform(0,1)
     if(Epsilon>=prob_decider):
         Act=random.randint(0,2)
     else:
         Act=np.argmax(list(Q_table[pos].values())) # conversion of dict.values() in list is important for correct greddy action selection.
-        # if(n_epoch<30):
-        #     print(n_epoch,'iteration and action chosen greedily')
     return Act
 
 def cal_update(Episode_history,Qtable):
@@ -75,7 +73,7 @@ for i in range(min_epoch,int(max_epoch*1.4)):
             k=k+1
             print(pos, 'state seen', k)
 
-        act=epsilon_greedy_policy(epsilon,pos,Q_lookup,n)
+        act=epsilon_greedy_policy(epsilon,pos,Q_lookup)
         obs,reward,done,d,e=env.step(act)  # taking a step in the environment
         episode.append([pos,act,reward])
 
@@ -90,8 +88,7 @@ for i in range(min_epoch,int(max_epoch*1.4)):
     reward_list.append(reward)
 
 print(Q_lookup,'\n\n',epoch_list,'\n\n',reward_list,'\n\n',iteration_list)
-x = np.arange(len(reward_list))
-plt.plot(x,reward_list)
+plt.plot(reward_list)
 plt.xlabel('No. of Epochs')
 plt.ylabel('Reward Function')
 plt.title('SARSA-Lambda implemented on MiniGrid-Dynamic-Obstacles-6x6-v0')

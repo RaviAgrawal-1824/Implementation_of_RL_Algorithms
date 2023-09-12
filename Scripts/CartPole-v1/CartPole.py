@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 env = gym.make('CartPole-v1')
 
 
-# All updates in it then copied in static model for stability.
+# All updates in dynamic model then copied in static model for stability.
 dynamic_model = torch.nn.Sequential(
         torch.nn.Linear(5,64),
         torch.nn.ReLU(),
@@ -30,6 +30,9 @@ def train_dynamic_model(train_data,train_label): # train_data is observation and
     #forward
     train_output=dynamic_model(train_data) # return predcited by model
     loss_function=nn.MSELoss()
+    if train_label.size() != train_output.size():
+        train_label=train_label.view(train_output.size())
+
     train_loss=loss_function(train_output,train_label)
     #backward
     train_loss.backward()  #updating parameters
@@ -65,9 +68,8 @@ def policy(obs): # returns optimal action comapring both action values, random a
 
 #############################################################################################################
 
-replay_memory_state,replay_memory_label=[],[] # (obs,action,reward,done,prev_obs)
+replay_memory_buffer = [] # (obs,action,reward,done,prev_obs)
 loss_plot,epsilon_plot,reward_plot=[],[],[]
-# previous_state_replay=[]
 optimal_reward_plot=[]
 
 replay_memory_size=5000 # replay memory size
@@ -75,30 +77,28 @@ total_epochs=1500 # number of epochs
 batch_size=1024 # batch size
 epsilon = 1
 gamma=0.99
+# gamma=0.9 also works but it moves out of frame and terminates, near optimal but not optimal, not stable
 
-env.reset() # better obs=
+obs=list(env.reset()[0])
 done,truncation = False, False
 
 # filling replay memory, not much required
-while len(replay_memory_state) < replay_memory_size:
+while len(replay_memory_buffer) < replay_memory_size:
     
     obs=list(env.reset()[0])
     done, truncation = False, False
 
     while (not done) and (not truncation):
         action=random.randint(0,1)
-        prev_obs=np.copy(obs) # present observation
+        prev_obs=np.copy(obs) # present observation copied
         obs, reward, done, truncation,q = env.step(action)
-        # previous_state_replay.append(prev_obs)
-        replay_memory_state.append([obs,action,reward,done,prev_obs])
-        if len(replay_memory_state) == replay_memory_size:
+        replay_memory_buffer.append([obs,action,reward,done,truncation,prev_obs])
+        if len(replay_memory_buffer) == replay_memory_size:
             break
-
-print('replay done')
 
 for i in range (0,total_epochs):
     
-    epsilon = 1 - i/total_epochs 
+    epsilon = 1 - i/(total_epochs-1) 
     epsilon_plot.append(epsilon)
     if i%50==0:
         print(i)
@@ -106,8 +106,7 @@ for i in range (0,total_epochs):
     obs=env.reset()[0]
     done, truncation = False, False
     reward=0
-    loss=0
-    # r=0
+
     while  (not done) and (not truncation):
 
         if epsilon>random.uniform(0,1):
@@ -120,36 +119,33 @@ for i in range (0,total_epochs):
         
         reward += rew
 
-        # previous_state_replay.append(prev_obs)
-        replay_memory_state.append([obs,action,rew,done,prev_obs])
+        replay_memory_buffer.append([obs,action,rew,done,truncation,prev_obs])
 
-        while len(replay_memory_state) > replay_memory_size:
-            replay_memory_state.pop(0)
-            # previous_state_replay.pop(0)
+        while len(replay_memory_buffer) > replay_memory_size:
+            replay_memory_buffer.pop(0)
 
     reward_plot.append(reward)
-    if len(replay_memory_state) != replay_memory_size:
-        print('replay buffer does not same')
+
+    if len(replay_memory_buffer) != replay_memory_size:
+        print('replay buffer size is not same')
         sys.exit()
-    else:
 
-        loss=0
-        sample=random.sample(range(0,replay_memory_size), batch_size)
-        label_list=[]  
-        data_list=[] 
-        # ai=0
+    loss=0
+    sample_list=random.sample(range(0,replay_memory_size), batch_size)
+    random.shuffle(sample_list)
+    label_list=[]  
+    data_list=[] 
 
-        for item in sample: 
-            #return 0 at terminal state as no further so 1 - done, max of next states are taken
-            # state action value or retuen of cureent obs after step
-            label=(replay_memory_state[item][2] + (1-replay_memory_state[item][3]) * gamma * np.max([static_model_output(replay_memory_state[item][4],0),static_model_output(replay_memory_state[item][4],1)]))
-            label_list.append(label)
-            data=list(replay_memory_state[item][0])+[replay_memory_state[item][1]]
-            data_list.append(data)
-        train_data=torch.tensor(data_list, dtype=torch.float32)
-        train_label=torch.tensor(label_list, dtype=torch.float32)   
-        loss=train_dynamic_model(train_data,train_label)
-        # loss=loss+train_dynamic_model(train_data,train_label)
+    for item in sample_list: 
+        #return 0 at terminal state as no further so 1 - done, max of next states are taken
+        # state action value or retuen of cureent obs after step
+        label=(replay_memory_buffer[item][2] + (1-(replay_memory_buffer[item][3])) * gamma * np.max([static_model_output(replay_memory_buffer[item][0],0),static_model_output(replay_memory_buffer[item][0],1)]))
+        label_list.append(label)
+        data=list(replay_memory_buffer[item][5])+[replay_memory_buffer[item][1]]
+        data_list.append(data)
+    train_data=torch.tensor(data_list, dtype=torch.float32)
+    train_label=torch.tensor(label_list, dtype=torch.float32)   
+    loss=train_dynamic_model(train_data,train_label)
     loss_plot.append(loss)
 
     # if i%3==0:
@@ -162,9 +158,9 @@ for i in range (0,total_epochs):
     done, truncation = False, False
 
     while (not done) and (not truncation):
-            action=policy(obs)
-            obs, rew, done, truncation,q = env.step(action) 
-            reward += rew
+        action=policy(obs)
+        obs, rew, done, truncation,q = env.step(action) 
+        reward += rew
     optimal_reward_plot.append(reward)
     
 
@@ -191,4 +187,3 @@ for i in range(0,10):
     while not done:
         action=policy(obs)
         obs, reward, done, truncation,q = env.step(action) 
-        
