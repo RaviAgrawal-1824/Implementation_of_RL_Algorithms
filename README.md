@@ -18,7 +18,7 @@
 
 ## Model-Based Methods
 Model-based algorithms require the complete dynamics of the environment for their implementation. The value function for each state is computed using the model of the environment and optimal policy is determined accordingly.
-Tested on different [FrozenLake environments](https://www.gymlibrary.dev/environments/toy_text/frozen_lake/):
+Tested on different [FrozenLake environments](https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/tree/main/Scripts/FrozenLake):
    1. `FrozenLake-v1`, `is_slippery = False`
    2. `FrozenLake8x8-v1`, `is_slippery = False`
    3. `FrozenLake-v1`, `is_slippery = True`
@@ -41,7 +41,7 @@ This algorithm also involves an iterative process that alternates between evalua
 
   ### Tabular Methods
 Tabular methods maintain a table of values for each state-action pair in the environment. The agent explores the environment and appends new observations in the table and iteratively estimates its true value functions. They are effective in small to medium-sized environments.
-Tested on different [Minigrid environments](https://github.com/mit-acl/gym-minigrid):
+Tested on [MiniGrid-Empty-Room](https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/tree/main/Scripts/Empty-Room-6x6-v0) and [MiniGrid-Dynamic-Obstacles](https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/tree/main/Scripts/Dynamic-Obstacles-6x6-v0) environments:
    1. `MiniGrid-Empty-6x6-v0`
    2. `MiniGrid-Empty-8x8-v0`
    3. `MiniGrid-Empty-Random-6x6-v0`
@@ -83,7 +83,7 @@ This algorithm is an OFF-policy algorithm. Its behaviour policy is Epsilon-greed
 #### effect on learning with variations in hyperparameters -->
 
 ### Learning-based Methods
-Learning-based methods involve directly learning the optimal policy or value function without constructing an explicit model of the environment. These methods utilize machine learning techniques, often neural networks, to approximate complex value functions or policies. These methods are especially suitable for environments with high-dimensional state spaces or continuous action spaces where tabular methods might be impractical. Tested on different [Gym environments](https://www.gymlibrary.dev/environments/classic_control/): 
+Learning-based methods involve directly learning the optimal policy or value function without constructing an explicit model of the environment. These methods utilize machine learning techniques, often neural networks, to approximate complex value functions or policies. These methods are especially suitable for environments with high-dimensional state spaces or continuous action spaces where tabular methods might be impractical. Tested on [CartPole](https://github.com/RaviAgrawal-1824/Implementation_of_RL_Algorithms/tree/main/Scripts/CartPole-v1) and [Pendulum](https://www.gymlibrary.dev/environments/classic_control/pendulum/) environments: 
    * `CartPole-v1`
    * `Pendulum-v1`
 
